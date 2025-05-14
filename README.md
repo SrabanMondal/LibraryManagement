@@ -35,14 +35,10 @@ A full-stack library management application built with **Next.js (Frontend)** an
 
 ## 📁 Folder Structure
 
-Library_Management/
-├── backend/ # NestJS Backend (API, Prisma, Auth)
-├── frontend/ # Next.js Frontend (User UI)
+Library_Management/</br>
+├── backend/ # NestJS Backend (API, Prisma, Auth)</br>
+├── frontend/ # Next.js Frontend (User UI)</br>
 └── README.md
-
-yaml
-Copy
-Edit
 
 ---
 
