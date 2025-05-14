@@ -70,6 +70,9 @@ Create a .env file:
 env
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/library"
 JWT_SECRET="your_jwt_secret"
+PORT = 4000
+NODE_ENV = 'DEV'
+FRONTEND = http://localhost:3000
 ```
 Run Prisma migration:
 
