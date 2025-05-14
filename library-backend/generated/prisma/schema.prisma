@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  member
+}
+
+model Users {
+  id           Int            @id @default(autoincrement())
+  name         String
+  email        String         @unique
+  password     String
+  role         Role           @default(member)
+  registeredAt DateTime       @default(now())
+  Transactions Transactions[]
+
+  @@index([email])
+}
+
+model Publishers {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  Books Books[]
+}
+
+model Categories {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  Books Books[]
+}
+
+model Books {
+  id               Int            @id @default(autoincrement())
+  title            String         @unique
+  published_year   Int
+  publisherId      Int
+  categoryId       Int
+  total_copies     Int
+  available_copies Int
+  publisher        Publishers     @relation(fields: [publisherId], references: [id])
+  category         Categories     @relation(fields: [categoryId], references: [id])
+  authors          Authors[]      @relation("BookAuthors")
+  Transactions     Transactions[]
+
+  @@index([title])
+}
+
+model Authors {
+  id    Int     @id @default(autoincrement())
+  name  String
+  books Books[] @relation("BookAuthors")
+}
+
+model Transactions {
+  id         Int       @id @default(autoincrement())
+  bookId     Int
+  memberId   Int
+  borrowedAt DateTime
+  returnedAt DateTime?
+  book       Books     @relation(fields: [bookId], references: [id])
+  member     Users     @relation(fields: [memberId], references: [id])
+
+  @@index([bookId, memberId])
+}
